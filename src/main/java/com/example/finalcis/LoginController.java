@@ -25,6 +25,8 @@ public class LoginController {
     protected void handleLoginButtonAction(ActionEvent event) {
         try {
             if (authenticate(usernameField.getText(), passwordField.getText())) {
+                System.out.println("Login successful!");
+
                 // Load the "Hello" view
                 Parent helloParent = FXMLLoader.load(getClass().getResource("HelloScreen.fxml"));
                 Scene helloScene = new Scene(helloParent);
@@ -36,11 +38,11 @@ public class LoginController {
                 window.setScene(helloScene);
                 window.show();
             } else {
-                // Handle login failure (show an error message, clear fields, etc.)
+                System.out.println("Login failed. Incorrect username or password.");
             }
         } catch (IOException e) {
+            System.out.println("An error occurred while loading the Hello screen.");
             e.printStackTrace();
-            // Handle exceptions (show error message, log the error, etc.)
         }
     }
 
