@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Objects;
 
 public class LoginController {
 
@@ -28,14 +29,12 @@ public class LoginController {
                 System.out.println("Login successful!");
 
                 // Load the "Hello" view
-                Parent helloParent = FXMLLoader.load(getClass().getResource("HelloScreen.fxml"));
-                Scene helloScene = new Scene(helloParent);
+                Parent loginScreenParent = FXMLLoader.load(getClass().getResource("/com/example/finalcis/LoginScreen.fxml"));
 
-                // Get the stage from the event that was triggered by the button click
+                Scene loginFormScene = new Scene(loginScreenParent);
+
                 Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-                // Change the scene on the stage to the "Hello" screen
-                window.setScene(helloScene);
+                window.setScene(loginFormScene);
                 window.show();
             } else {
                 System.out.println("Login failed. Incorrect username or password.");
