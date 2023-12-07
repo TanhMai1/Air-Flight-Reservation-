@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -23,27 +24,33 @@ public class LoginController {
     private PasswordField passwordField;
 
     @FXML
+    private Label loginMessageLabel;
+
+
+    @FXML
     protected void handleLoginButtonAction(ActionEvent event) {
         try {
             if (authenticate(usernameField.getText(), passwordField.getText())) {
                 System.out.println("Login successful!");
 
                 // Load the "Hello" view
-                Parent loginScreenParent = FXMLLoader.load(getClass().getResource("/com/example/finalcis/LoginScreen.fxml"));
-
+                Parent loginScreenParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/finalcis/LoginScreen.fxml")));
                 Scene loginFormScene = new Scene(loginScreenParent);
 
-                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setScene(loginFormScene);
                 window.show();
             } else {
                 System.out.println("Login failed. Incorrect username or password.");
+                loginMessageLabel.setText("Incorrect username or password."); // Update UI with error message
+                passwordField.clear(); // Optionally clear the password field
             }
         } catch (IOException e) {
             System.out.println("An error occurred while loading the Hello screen.");
             e.printStackTrace();
         }
     }
+
 
     private boolean authenticate(String username, String password) {
         Connection connection = null;
