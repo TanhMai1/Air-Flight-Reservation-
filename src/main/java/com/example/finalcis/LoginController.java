@@ -30,33 +30,41 @@ public class LoginController {
     @FXML
     protected void handleLoginButtonAction(ActionEvent event) {
         try {
-            if (authenticate(usernameField.getText(), passwordField.getText())) {
+            Integer userId = authenticate(usernameField.getText(), passwordField.getText());
+            if (userId != null) {
                 System.out.println("Login successful!");
+                SessionManager.getInstance().setUserId(userId); // Set the user ID in the session manager
+                System.out.println(userId);
 
                 // Load the "Hello" view
-                Parent loginScreenParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/finalcis/LoginScreen.fxml")));
-                Scene loginFormScene = new Scene(loginScreenParent);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/MainScreen.fxml"));
+                Parent mainScreenParent = loader.load();
 
+                // If MainScreen has a controller that needs to know the user ID, you can set it like this:
+                // MainScreenController controller = loader.getController();
+                // controller.setUserId(userId);
+
+                Scene mainScreenScene = new Scene(mainScreenParent);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                window.setScene(loginFormScene);
+                window.setScene(mainScreenScene);
                 window.show();
             } else {
                 System.out.println("Login failed. Incorrect username or password.");
-                loginMessageLabel.setText("Incorrect username or password."); // Update UI with error message
-                passwordField.clear(); // Optionally clear the password field
+                loginMessageLabel.setText("Incorrect username or password.");
             }
         } catch (IOException e) {
-            System.out.println("An error occurred while loading the Hello screen.");
+            System.out.println("An error occurred while loading the Main screen.");
             e.printStackTrace();
         }
     }
 
 
-    private boolean authenticate(String username, String password) {
+
+    private Integer authenticate(String username, String password) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        String query = "SELECT id FROM users WHERE username = ? AND password = ?";
 
         try {
             connection = DBConnection.getConnection();
@@ -66,22 +74,18 @@ public class LoginController {
 
             resultSet = preparedStatement.executeQuery();
 
-            return resultSet.next(); // If the result set is not empty, authentication succeeded
+            if (resultSet.next()) {
+                return resultSet.getInt("id"); // Get user ID from the result set
+            }
+            return null; // Return null if authentication failed
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return null;
         } finally {
-            // It's important to close the resources in the finally block to ensure they are closed even if an exception is thrown.
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
