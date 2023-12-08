@@ -5,17 +5,16 @@ import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 
 public class FlightSearchController {
 
-    public Button bookFlightButton;
     @FXML private TextField fromCityField;
     @FXML private TextField toCityField;
     @FXML private DatePicker datePicker;
@@ -30,8 +29,13 @@ public class FlightSearchController {
     @FXML private TableColumn<Flight, LocalTime> arrivalTimeColumn;
     @FXML private TableColumn<Flight, Number> capacityColumn;
 
+    private final ObservableList<Flight> flightsList = FXCollections.observableArrayList();
+
     public void initialize() {
-        // Set up the TableView cell value factories
+        // Bind the TableView to the ObservableList.
+        flightsTable.setItems(flightsList);
+
+        // Initialize cell value factories for the TableView columns
         flightIdColumn.setCellValueFactory(cellData -> cellData.getValue().flightIdProperty());
         fromCityColumn.setCellValueFactory(cellData -> cellData.getValue().fromCityProperty());
         toCityColumn.setCellValueFactory(cellData -> cellData.getValue().toCityProperty());
@@ -43,34 +47,40 @@ public class FlightSearchController {
     }
 
     @FXML
-    protected void handleSearchAction(ActionEvent event) {
-        searchFlights();
-    }
-
     private void searchFlights() {
+        // Get the input from the user
         String fromCity = fromCityField.getText();
         String toCity = toCityField.getText();
         LocalDate date = datePicker.getValue();
-        LocalTime time = LocalTime.parse(timeField.getText()); // Make sure to validate and handle parsing errors
+        LocalTime time = null;
 
-        String query = "SELECT * FROM flights WHERE from_city = ? AND to_city = ? AND DATE(departure_time) = ? AND TIME(departure_time) = ?";
-
-        ObservableList<Flight> flights = FXCollections.observableArrayList();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
+        // Parse the time if not empty and handle parsing errors
         try {
-            connection = DBConnection.getConnection();
-            preparedStatement = connection.prepareStatement(query);
+            String timeString = timeField.getText();
+            if (!timeString.isEmpty()) {
+                time = LocalTime.parse(timeString);
+            }
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            // Inform user of the incorrect time format
+            return;
+        }
+
+        // SQL query
+        String query = "SELECT * FROM flights WHERE from_city = ? AND to_city = ? AND departure_date = ? AND departure_time = ?";
+        try {
+            Connection connection = DBConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, fromCity);
             preparedStatement.setString(2, toCity);
-            preparedStatement.setObject(3, date);
-            preparedStatement.setObject(4, time);
+            preparedStatement.setDate(3, java.sql.Date.valueOf(date)); // Convert LocalDate to java.sql.Date
+            preparedStatement.setTime(4, java.sql.Time.valueOf(time)); // Convert LocalTime to java.sql.Time
 
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            flightsList.clear(); // Clear the list before adding new items
+
             while (resultSet.next()) {
-                Flight flight = new Flight(
+                flightsList.add(new Flight(
                         resultSet.getInt("flight_id"),
                         resultSet.getString("from_city"),
                         resultSet.getString("to_city"),
@@ -79,39 +89,20 @@ public class FlightSearchController {
                         resultSet.getDate("arrival_date").toLocalDate(),
                         resultSet.getTime("arrival_time").toLocalTime(),
                         resultSet.getInt("capacity")
-                );
-                flights.add(flight);
+                ));
             }
+
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle exceptions
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            // Handle exceptions, maybe show an alert to the user
         }
-
-        flightsTable.setItems(flights);
     }
 
     public void handleBookFlightAction(ActionEvent event) {
     }
+
+    // Other methods can be added as necessary, such as handleBookFlightAction
 }

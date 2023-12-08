@@ -94,9 +94,6 @@ public class LoginController {
     }
 
     @FXML
-    private Button bookFlightButton;
-
-    @FXML
     protected void handleBookFlightButton(ActionEvent event) {
         try {
             // Load the Flight Search view
