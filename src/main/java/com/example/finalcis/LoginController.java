@@ -37,7 +37,7 @@ public class LoginController {
                 System.out.println(userId);
 
                 // Load the "Hello" view
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/MainScreen.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/LoginScreen.fxml"));
                 Parent mainScreenParent = loader.load();
 
                 // If MainScreen has a controller that needs to know the user ID, you can set it like this:
