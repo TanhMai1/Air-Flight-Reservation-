@@ -40,11 +40,12 @@
                <TextField fx:id="timeField" promptText="Enter time" />
                <Button fx:id="handleSearchAction" onAction="#searchFlights" text="Search" />
            </HBox>
+         <Label fx:id="bookFlightLabel" />
        </VBox>
    </top>
     <bottom>
     </bottom>
    <bottom>
-       <Button fx:id="bookFlightButton" text="Book Flight" onAction="#handleBookFlightAction" />
+       <Button fx:id="bookFlightButton" onAction="#handleBookFlightAction" text="Book Flight" />
    </bottom>
 </BorderPane>

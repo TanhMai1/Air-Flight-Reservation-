@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,7 @@ import java.time.format.DateTimeParseException;
 
 public class FlightSearchController {
 
+    @FXML Label bookFlightLabel;
     @FXML private TextField fromCityField;
     @FXML private TextField toCityField;
     @FXML private DatePicker datePicker;
@@ -28,6 +30,7 @@ public class FlightSearchController {
     @FXML private TableColumn<Flight, LocalDate> arrivalDateColumn;
     @FXML private TableColumn<Flight, LocalTime> arrivalTimeColumn;
     @FXML private TableColumn<Flight, Number> capacityColumn;
+
 
     private final ObservableList<Flight> flightsList = FXCollections.observableArrayList();
 
@@ -101,8 +104,73 @@ public class FlightSearchController {
         }
     }
 
+    @FXML
     public void handleBookFlightAction(ActionEvent event) {
+        Flight selectedFlight = flightsTable.getSelectionModel().getSelectedItem();
+        if (selectedFlight != null) {
+            int userId = getCurrentUserId(); // This will now retrieve the ID from the session.
+            int flightId = selectedFlight.getFlightId();
+            LocalDate bookingDate = LocalDate.now(); // Assuming the booking date is the current date.
+
+            bookFlightForUser(userId, flightId, bookingDate);
+        } else {
+            System.out.println("Please select a flight");
+        }
     }
 
-    // Other methods can be added as necessary, such as handleBookFlightAction
+
+    private void bookFlightForUser(int userId, int flightId, LocalDate bookingDate) {
+        String insertQuery = "INSERT INTO user_flights (user_id, flight_id, booking_date) VALUES (?, ?, ?)";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(insertQuery);
+
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, flightId);
+            preparedStatement.setObject(3, bookingDate);
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows > 0) {
+                bookFlightLabel.setText("Book Flight Successful");
+            } else {
+                // Booking failed, inform the user.
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exceptions, maybe show an alert to the user.
+        } finally {
+            // Ensure resources are closed after the operation is complete
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    private int getCurrentUserId() {
+        Integer userId = SessionManager.getInstance().getUserId();
+        if (userId == null) {
+            // Handle case where the user ID is not set, which means no user is logged in.
+            // You might throw an exception or show an error message.
+        }
+        return userId;
+    }
+
+
+
+
 }
