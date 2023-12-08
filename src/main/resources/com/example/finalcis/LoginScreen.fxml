@@ -17,7 +17,7 @@
          </font>
       </Text>
       <Button mnemonicParsing="false" text="My Flights" />
-      <Button mnemonicParsing="false" text="Book Flight" />
-      <Button mnemonicParsing="false" text="Delete a flight" />
+       <Button fx:id="bookFlightButton" mnemonicParsing="false" text="Book Flight" onAction="#handleBookFlightButton" />
+       <Button mnemonicParsing="false" text="Delete a flight" />
    </children>
 </VBox>

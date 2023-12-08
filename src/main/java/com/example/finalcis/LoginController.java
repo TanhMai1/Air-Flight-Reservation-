@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -90,5 +91,32 @@ public class LoginController {
                 e.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    private Button bookFlightButton;
+
+    @FXML
+    protected void handleBookFlightButton(ActionEvent event) {
+        try {
+            // Load the Flight Search view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/FlightSearch.fxml"));
+            Parent flightSearchParent = loader.load();
+            Scene flightSearchScene = new Scene(flightSearchParent);
+
+            // Get the stage from the event that was triggered by the button click and set the new scene
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(flightSearchScene);
+            window.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle exception, possibly show an error dialog to the user
+        }
+    }
+
+    public void handleRegisterAction(ActionEvent event) {
+    }
+
+    public void handleForgotPasswordAction(ActionEvent event) {
     }
 }

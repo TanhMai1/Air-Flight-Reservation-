@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Button?>
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.finalcis.FlightSearchController">
+    <center>
+        <TableView fx:id="flightsTable">
+            <columns>
+                <TableColumn fx:id="flightIdColumn" text="Flight ID" />
+                <TableColumn fx:id="fromCityColumn" text="From City" />
+                <TableColumn fx:id="toCityColumn" text="To City" />
+                <TableColumn fx:id="departureDateColumn" text="Departure Date" />
+                <TableColumn fx:id="departureTimeColumn" text="Departure Time" />
+                <TableColumn fx:id="arrivalDateColumn" text="Arrival Date" />
+                <TableColumn fx:id="arrivalTimeColumn" text="Arrival Time" />
+                <TableColumn fx:id="capacityColumn" text="Capacity" />
+            </columns>
+        </TableView>
+    </center>
+   <top>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+               <children>
+                <Label text="From City:" />
+                <TextField fx:id="fromCityField" promptText="Enter from city" />
+                <Label text="To City:" />
+                <TextField fx:id="toCityField" promptText="Enter to city" />
+               </children>
+            </HBox>
+             <HBox spacing="15">
+                 <Label text="Date (yyyy-mm-dd):" />
+                 <DatePicker fx:id="datePicker" />
+                 <Label text="Time (HH:MM):" />
+                 <TextField fx:id="timeField" promptText="Enter time" />
+                 <Button text="Search" onAction="#handleSearchAction" />
+             </HBox>
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </VBox>
+   </top>
+</BorderPane>
