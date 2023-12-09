@@ -41,6 +41,7 @@
                <Button fx:id="handleSearchAction" onAction="#searchFlights" text="Search" />
            </HBox>
          <Label fx:id="bookFlightLabel" />
+         <Label fx:id="overBooked" />
        </VBox>
    </top>
     <bottom>

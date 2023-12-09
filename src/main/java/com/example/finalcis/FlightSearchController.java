@@ -16,6 +16,7 @@ import java.time.format.DateTimeParseException;
 
 public class FlightSearchController {
 
+    @FXML Label overBooked;
     @FXML Label bookFlightLabel;
     @FXML private TextField fromCityField;
     @FXML private TextField toCityField;
@@ -120,6 +121,18 @@ public class FlightSearchController {
 
 
     private void bookFlightForUser(int userId, int flightId, LocalDate bookingDate) {
+
+        if (isFlightAlreadyBooked(userId, flightId)) {
+            overBooked.setText("You already booked this flight");
+            return;
+        }
+
+        // Check for overlapping flights
+        if (hasOverlappingFlights(userId, flightId)) {
+            overBooked.setText("You have a over lapping flight");
+            return;
+        }
+
         String insertQuery = "INSERT INTO user_flights (user_id, flight_id, booking_date) VALUES (?, ?, ?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -168,6 +181,97 @@ public class FlightSearchController {
             // You might throw an exception or show an error message.
         }
         return userId;
+    }
+
+    private boolean isFlightAlreadyBooked(int userId, int flightId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String query = "SELECT COUNT(*) FROM user_flights WHERE user_id = ? AND flight_id = ?";
+
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, flightId);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean hasOverlappingFlights(int userId, int newFlightId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String query = "SELECT COUNT(*) FROM user_flights uf " +
+                "JOIN flights f ON uf.flight_id = f.flight_id " +
+                "JOIN flights newf ON newf.flight_id = ? " +
+                "WHERE uf.user_id = ? AND ((f.departure_time < newf.arrival_time " +
+                "AND f.arrival_time > newf.departure_time) OR (f.arrival_time > newf.departure_time " +
+                "AND f.departure_time < newf.arrival_time))";
+
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, newFlightId);
+            preparedStatement.setInt(2, userId);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
     }
 
 
