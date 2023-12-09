@@ -122,6 +122,11 @@ public class FlightSearchController {
 
     private void bookFlightForUser(int userId, int flightId, LocalDate bookingDate) {
 
+        if (isFlightFull(flightId)) {
+            overBooked.setText("This flight is full");
+            return;
+        }
+
         if (isFlightAlreadyBooked(userId, flightId)) {
             overBooked.setText("You already booked this flight");
             return;
@@ -274,7 +279,47 @@ public class FlightSearchController {
         return false;
     }
 
+    private boolean isFlightFull(int flightId) {
+        String capacityQuery = "SELECT capacity FROM flights WHERE flight_id = ?";
+        String bookingCountQuery = "SELECT COUNT(*) FROM user_flights WHERE flight_id = ?";
+        int capacity = 0;
+        int bookingCount = 0;
 
+        Connection connection = null;
+        PreparedStatement capacityStatement = null;
+        PreparedStatement bookingCountStatement = null;
+        ResultSet capacityResultSet = null;
+        ResultSet bookingCountResultSet = null;
 
+        try {
+            connection = DBConnection.getConnection();
 
+            // Check the flight's capacity
+            capacityStatement = connection.prepareStatement(capacityQuery);
+            capacityStatement.setInt(1, flightId);
+            capacityResultSet = capacityStatement.executeQuery();
+            if (capacityResultSet.next()) {
+                capacity = capacityResultSet.getInt("capacity");
+            }
+
+            // Check the number of bookings
+            bookingCountStatement = connection.prepareStatement(bookingCountQuery);
+            bookingCountStatement.setInt(1, flightId);
+            bookingCountResultSet = bookingCountStatement.executeQuery();
+            if (bookingCountResultSet.next()) {
+                bookingCount = bookingCountResultSet.getInt(1);
+            }
+
+            return bookingCount >= capacity;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return true; // Assume full on error to prevent overbooking
+        } finally {
+            if (capacityResultSet != null) try { capacityResultSet.close(); } catch (SQLException e) { e.printStackTrace(); }
+            if (bookingCountResultSet != null) try { bookingCountResultSet.close(); } catch (SQLException e) { e.printStackTrace(); }
+            if (capacityStatement != null) try { capacityStatement.close(); } catch (SQLException e) { e.printStackTrace(); }
+            if (bookingCountStatement != null) try { bookingCountStatement.close(); } catch (SQLException e) { e.printStackTrace(); }
+            if (connection != null) try { connection.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+    }
 }
