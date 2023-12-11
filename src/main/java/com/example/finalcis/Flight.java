@@ -2,6 +2,8 @@ package com.example.finalcis;
 
 import javafx.beans.property.*;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -25,6 +27,19 @@ public class Flight {
         this.arrivalDate.set(arrivalDate);
         this.arrivalTime.set(arrivalTime);
         this.capacity.set(capacity);
+    }
+
+    public static Flight fromResultSet(ResultSet resultSet) throws SQLException {
+        int flightId = resultSet.getInt("flight_id");
+        String fromCity = resultSet.getString("from_city");
+        String toCity = resultSet.getString("to_city");
+        LocalDate departureDate = resultSet.getDate("departure_date").toLocalDate();
+        LocalTime departureTime = resultSet.getTime("departure_time").toLocalTime();
+        LocalDate arrivalDate = resultSet.getDate("arrival_date").toLocalDate();
+        LocalTime arrivalTime = resultSet.getTime("arrival_time").toLocalTime();
+        int capacity = resultSet.getInt("capacity");
+
+        return new Flight(flightId, fromCity, toCity, departureDate, departureTime, arrivalDate, arrivalTime, capacity);
     }
 
     // Getters and setters for JavaFX properties

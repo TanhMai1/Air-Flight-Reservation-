@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
@@ -121,12 +122,12 @@ public class LoginController {
         try {
             // Load the Flight Search view
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/MainScreen.fxml"));
-            Parent MainScreen = loader.load();
-            Scene MainScreenScene = new Scene(MainScreen);
+            Parent flightSearchParent = loader.load();
+            Scene flightSearchScene = new Scene(flightSearchParent);
 
             // Get the stage from the event that was triggered by the button click and set the new scene
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(MainScreenScene);
+            window.setScene(flightSearchScene);
             window.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -134,5 +135,20 @@ public class LoginController {
         }
 
     }
-}
 
+    @FXML
+    private void handleMyFlightsButtonAction(ActionEvent event) {
+        try {
+            // Load the "My Flights" view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("MyFlightsView.fxml"));
+            VBox myFlightsView = loader.load();
+
+            // Get the current scene and set the new root
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.getScene().setRoot(myFlightsView);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception, possibly by showing an error message to the user
+        }
+    }
+}

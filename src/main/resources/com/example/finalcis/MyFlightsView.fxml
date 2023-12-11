@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.finalcis.MyFlightsController">
+    <TableView fx:id="flightsTableView">
+        <columns>
+            <TableColumn fx:id="flightIdColumn" text="Flight ID" />
+            <TableColumn fx:id="fromCityColumn" text="From City" />
+            <TableColumn fx:id="toCityColumn" text="To City" />
+            <TableColumn fx:id="departureDateColumn" text="Departure Date" />
+            <TableColumn fx:id="departureTimeColumn" text="Departure Time" />
+            <TableColumn fx:id="arrivalDateColumn" text="Arrival Date" />
+            <TableColumn fx:id="arrivalTimeColumn" text="Arrival Time" />
+            <TableColumn fx:id="capacityColumn" text="Capacity" />
+        </columns>
+    </TableView>
+</VBox>
+
