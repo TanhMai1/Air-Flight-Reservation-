@@ -113,6 +113,20 @@ public class LoginController {
     }
 
     public void handleRegisterAction(ActionEvent event) {
+        try {
+            // Load the Flight Search view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/RegistrationScreen.fxml"));
+            Parent RegistrationScreenParent = loader.load();
+            Scene RegistrationScreenScene = new Scene(RegistrationScreenParent);
+
+            // Get the stage from the event that was triggered by the button click and set the new scene
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(RegistrationScreenScene);
+            window.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle exception, possibly show an error dialog to the user
+        }
     }
 
     public void handleForgotPasswordAction(ActionEvent event) {
