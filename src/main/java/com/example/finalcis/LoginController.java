@@ -112,7 +112,7 @@ public class LoginController {
         }
     }
 
-    public void handleRegisterAction(ActionEvent event) {
+    public void handleRegistrationAction(ActionEvent event) {
         try {
             // Load the Flight Search view
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/RegistrationScreen.fxml"));
@@ -128,7 +128,6 @@ public class LoginController {
             // Handle exception, possibly show an error dialog to the user
         }
     }
-
     public void handleForgotPasswordAction(ActionEvent event) {
     }
 
