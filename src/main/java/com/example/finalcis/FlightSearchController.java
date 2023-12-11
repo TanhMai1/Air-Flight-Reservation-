@@ -1,11 +1,16 @@
 package com.example.finalcis;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -180,12 +185,7 @@ public class FlightSearchController {
 
 
     private int getCurrentUserId() {
-        Integer userId = SessionManager.getInstance().getUserId();
-        if (userId == null) {
-            // Handle case where the user ID is not set, which means no user is logged in.
-            // You might throw an exception or show an error message.
-        }
-        return userId;
+        return SessionManager.getInstance().getUserId();
     }
 
     private boolean isFlightAlreadyBooked(int userId, int flightId) {
