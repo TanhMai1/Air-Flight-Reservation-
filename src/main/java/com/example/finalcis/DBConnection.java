@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/authentication_system";
+    private static final String URL = "jdbc:mysql://localhost:3306/airline-reservation";
     private static final String USER = "root";
-    private static final String PASSWORD = "Nicasio/123";
+    private static final String PASSWORD = "Nikeswoosh1";
 
     // Static block to load the JDBC driver class
     static {
