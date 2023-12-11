@@ -121,12 +121,12 @@ public class LoginController {
         try {
             // Load the Flight Search view
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/MainScreen.fxml"));
-            Parent flightSearchParent = loader.load();
-            Scene flightSearchScene = new Scene(flightSearchParent);
+            Parent MainScreen = loader.load();
+            Scene MainScreenScene = new Scene(MainScreen);
 
             // Get the stage from the event that was triggered by the button click and set the new scene
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(flightSearchScene);
+            window.setScene(MainScreenScene);
             window.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -135,3 +135,4 @@ public class LoginController {
 
     }
 }
+
