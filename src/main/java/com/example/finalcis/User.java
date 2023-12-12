@@ -17,7 +17,7 @@ public class User {
 
     public User(String firstName, String lastName, String address, String zip,
                 String state, String username, String password, String email,
-                String ssn, String securityQuestion, String securityAnswer) {
+                String ssn, String securityQuestion) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -28,7 +28,6 @@ public class User {
         this.email = email;
         this.ssn = ssn;
         this.securityQuestion = securityQuestion;
-        this.securityAnswer = securityAnswer;// Consider the security implications of storing SSNs
     }
     public User(int id, String firstName) {
         this.id = id;
@@ -36,7 +35,7 @@ public class User {
     }
 
 
-    public String getFirstNameirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
