@@ -8,7 +8,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="420.0" prefWidth="359.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="452.0" prefWidth="359.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.finalcis.RegistrationController">
+
     <children>
       <Text layoutX="100.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration" textAlignment="CENTER">
          <font>
@@ -17,35 +18,36 @@
       </Text>
 
               <Label layoutX="60.0" layoutY="68.0" text="First Name:" />
-        <TextField layoutX="160.0" layoutY="64.0" promptText="Enter your first name" />
+        <TextField fx:id="firstNameField" layoutX="160.0" layoutY="64.0" promptText="Enter your first name" />
 
         <Label layoutX="60.0" layoutY="103.0" text="Last Name:" />
-        <TextField layoutX="160.0" layoutY="99.0" promptText="Enter your last name" />
+        <TextField fx:id="lastNameField" layoutX="160.0" layoutY="99.0" promptText="Enter your last name" />
 
         <Label layoutX="60.0" layoutY="138.0" text="Address:" />
-        <TextField layoutX="160.0" layoutY="134.0" promptText="Enter your address" />
+        <TextField fx:id="addressField" layoutX="160.0" layoutY="134.0" promptText="Enter your address" />
 
         <Label layoutX="60.0" layoutY="173.0" text="Zipcode:" />
-        <TextField layoutX="160.0" layoutY="169.0" promptText="Enter your zipcode" />
+        <TextField fx:id="zipcodeField" layoutX="160.0" layoutY="169.0" promptText="Enter your zipcode" />
 
         <Label layoutX="60.0" layoutY="208.0" text="State:" />
-        <TextField layoutX="160.0" layoutY="204.0" promptText="Enter your state" />
+        <TextField fx:id="stateField" layoutX="160.0" layoutY="204.0" promptText="Enter your state" />
 
         <Label layoutX="60.0" layoutY="243.0" text="Username:" />
-        <TextField layoutX="160.0" layoutY="239.0" promptText="Enter your username" />
+        <TextField fx:id="usernameField" layoutX="160.0" layoutY="239.0" promptText="Enter your username" />
 
         <Label layoutX="60.0" layoutY="278.0" text="Password:" />
-        <PasswordField layoutX="160.0" layoutY="274.0" promptText="Enter your password" />
+        <PasswordField fx:id="passwordField" layoutX="160.0" layoutY="274.0" promptText="Enter your password" />
 
         <Label layoutX="60.0" layoutY="313.0" text="Email:" />
-        <TextField layoutX="160.0" layoutY="309.0" promptText="Enter your email" />
+        <TextField fx:id="emailField" layoutX="160.0" layoutY="309.0" promptText="Enter your email" />
 
         <Label layoutX="60.0" layoutY="348.0" text="SSN:" />
-        <TextField layoutX="160.0" layoutY="344.0" promptText="Enter your SSN" />
+        <TextField fx:id="ssnField" layoutX="160.0" layoutY="344.0" promptText="Enter your SSN" />
 
         <Label layoutX="60.0" layoutY="383.0" text="Security Question:" />
-        <TextField layoutX="160.0" layoutY="379.0" promptText="Enter your favorite color" />
+        <TextField fx:id="securityQuestionField" layoutX="160.0" layoutY="379.0" promptText="Enter your favorite color" />
 
-        <Button layoutX="150.0" layoutY="418.0" mnemonicParsing="false" text="Register" />
+        <Button layoutX="150.0" layoutY="418.0" mnemonicParsing="false" onAction="#registerButtonAction" prefWidth="60.0" text="Register" />
+
     </children>
 </AnchorPane>

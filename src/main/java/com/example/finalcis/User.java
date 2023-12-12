@@ -30,32 +30,21 @@ public class User {
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;// Consider the security implications of storing SSNs
     }
-
-    public void displayDetails() {
-        System.out.println("User Details:");
-        System.out.println("Name: " + getFirstName() + " " + getLastName());
-        System.out.println("Username: " + getUsername());
-        System.out.println("Email: " + getEmail());
-    }
-
-
     public User(int id, String firstName) {
         this.id = id;
         this.firstName = firstName;
     }
 
 
-    public String getFirstName() {
+    public String getFirstNameirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(String FirstName) {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
+    public String getLastName() {return lastName;}
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
@@ -137,5 +126,4 @@ public class User {
     public int getId() {
         return id;
     }
-
 }
