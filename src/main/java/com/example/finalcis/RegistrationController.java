@@ -20,7 +20,7 @@ public class RegistrationController {
     private TextField addressField;
 
     @FXML
-    private TextField zipcodeField;
+    private TextField zipField;
 
     @FXML
     private TextField stateField;
@@ -41,11 +41,11 @@ public class RegistrationController {
     private TextField securityQuestionField;
 
     @FXML
-    private void registerButtonAction(){
+    private void registerButtonAction() {
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
         String address = addressField.getText();
-        String zipcode = zipcodeField.getText();
+        String zip = zipField.getText();
         String state = stateField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -53,16 +53,33 @@ public class RegistrationController {
         String ssn = ssnField.getText();
         String securityQuestion = securityQuestionField.getText();
 
-        System.out.println("Registration Details:");
-        System.out.println("First Name: " + firstName);
-        System.out.println("Last Name: " + lastName);
-        System.out.println("Address: " + address);
-        System.out.println("Zipcode: " + zipcode);
-        System.out.println("State: " + state);
-        System.out.println("Username: " + username);
-        System.out.println("Password: " + password);
-        System.out.println("Email: " + email);
-        System.out.println("SSN: " + ssn);
-        System.out.println("Security Question: " + securityQuestion);
+        registerdUser(firstName, lastName, address, zip, state, username, password, email, ssn, securityQuestion);
+        System.out.println("registration successful");
+    }
+
+    private void registerdUser(String firstName, String lastName, String address, String zip, String state, String username, String password, String email, String ssn, String securityQuestion) {
+        String url = "jdbc:mysql://localhost:3306/authentication_system";
+        String user = "root";
+        String dbpassword = "Nicasio/123";
+
+        try (Connection connection = DriverManager.getConnection(url, user, dbpassword)) {
+            String sql = "INSERT INTO users (firstName,lastName,address, zip, state, username, password, email, ssn, securityQuestion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+                preparedStatement.setString(3, address);
+                preparedStatement.setString(4, zip);
+                preparedStatement.setString(5, state);
+                preparedStatement.setString(6, username);
+                preparedStatement.setString(7, password);
+                preparedStatement.setString(8, email);
+                preparedStatement.setString(9, ssn);
+                preparedStatement.setString(10, securityQuestion);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle database-related exceptions
+        }
     }
 }
