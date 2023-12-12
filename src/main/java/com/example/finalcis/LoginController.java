@@ -28,7 +28,6 @@ public class LoginController {
     @FXML
     private Label loginMessageLabel;
 
-
     @FXML
     protected void handleLoginButtonAction(ActionEvent event) {
         try {
@@ -114,7 +113,7 @@ public class LoginController {
 
     public void handleRegisterAction(ActionEvent event) {
         try {
-            // Load the Flight Search view
+            // Load the Register form view
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/RegistrationScreen.fxml"));
             Parent RegistrationScreenParent = loader.load();
             Scene RegistrationScreenScene = new Scene(RegistrationScreenParent);
@@ -130,6 +129,13 @@ public class LoginController {
     }
 
     public void handleForgotPasswordAction(ActionEvent event) {
+        //if (event.getSource()== )
+        try {
+            //Integer username = authenticate(usernameField.getText(),);
+        }
+        catch (Exception e){
+
+        }
     }
 
     public void handleBackButton(ActionEvent event) {
