@@ -65,8 +65,8 @@ public class RegistrationController {
 
         try (Connection connection = DriverManager.getConnection(url, user, dbpassword);
                 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
-                preparedStatement.setString(1, username);
-                preparedStatement.setString(2, password);
+                preparedStatement.setString(1, firstName);
+                preparedStatement.setString(2, lastName);
                 preparedStatement.setString(3, address);
                 preparedStatement.setString(4, zip);
                 preparedStatement.setString(5, state);
