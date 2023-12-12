@@ -61,10 +61,10 @@ public class RegistrationController {
         String url = "jdbc:mysql://localhost:3306/authentication_system";
         String user = "root";
         String dbpassword = "Nicasio/123";
+        String INSERT_QUERY = "INSERT INTO users (firstName,lastName,address, zip, state, username, password, email, ssn, securityQuestion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = DriverManager.getConnection(url, user, dbpassword)) {
-            String sql = "INSERT INTO users (firstName,lastName,address, zip, state, username, password, email, ssn, securityQuestion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = DriverManager.getConnection(url, user, dbpassword);
+                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
                 preparedStatement.setString(1, username);
                 preparedStatement.setString(2, password);
                 preparedStatement.setString(3, address);
@@ -76,10 +76,8 @@ public class RegistrationController {
                 preparedStatement.setString(9, ssn);
                 preparedStatement.setString(10, securityQuestion);
                 preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle database-related exceptions
+            } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
     }
 }
