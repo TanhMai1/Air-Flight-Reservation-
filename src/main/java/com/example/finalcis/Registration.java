@@ -1,21 +1,8 @@
 package com.example.finalcis;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
-
-import java.io.IOException;
-import java.sql.*;
-import java.util.Objects;
 
 public class Registration {
     public TextField firstName;
@@ -29,8 +16,20 @@ public class Registration {
     public TextField ssn;
     public TextField securityQuestion;
 
-
     public void Register(ActionEvent event){
+        String firstName = this.firstName.getText();
+        String lastName = this.lastName.getText();
+        String address = this.address.getText();
+        String zipcode = this.zipcode.getText();
+        String state = this.state.getText();
+        String username = this.username.getText();
+        String password = this.password.getText();
+        String email = this.email.getText();
+        String ssn = this.ssn.getText();
+        String securityQuestion = this.securityQuestion.getText();
+
+        // Creating a new user object using the data from the text-fields
+        User user = new User(firstName, lastName, address, zipcode, state, username, password, email, ssn, securityQuestion);
 
     }
 
