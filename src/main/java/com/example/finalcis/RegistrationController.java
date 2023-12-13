@@ -73,13 +73,12 @@ public class RegistrationController {
     }
 
     private void registerdUser(String firstName, String lastName, String address, String zip, String state, String username, String password, String email, String ssn, String securityQuestion) {
-        String url = "jdbc:mysql://localhost:3306/authentication_system";
-        String user = "root";
-        String dbpassword = "Nicasio/123";
         String INSERT_QUERY = "INSERT INTO users (firstName,lastName,address, zip, state, username, password, email, ssn, securityQuestion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection connection = DriverManager.getConnection(url, user, dbpassword);
-                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_QUERY);
                 preparedStatement.setString(1, firstName);
                 preparedStatement.setString(2, lastName);
                 preparedStatement.setString(3, address);

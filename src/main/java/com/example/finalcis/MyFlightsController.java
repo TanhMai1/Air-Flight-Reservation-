@@ -1,5 +1,6 @@
 package com.example.finalcis;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
@@ -15,16 +16,25 @@ import java.time.LocalTime;
 
 public class MyFlightsController {
 
-    @FXML private TableView<Flight> flightsTableView;
+    @FXML
+    private TableView<Flight> flightsTableView;
 
-    @FXML private TableColumn<Flight, Number> flightIdColumn;
-    @FXML private TableColumn<Flight, String> fromCityColumn;
-    @FXML private TableColumn<Flight, String> toCityColumn;
-    @FXML private TableColumn<Flight, LocalDate> departureDateColumn;
-    @FXML private TableColumn<Flight, LocalTime> departureTimeColumn;
-    @FXML private TableColumn<Flight, LocalDate> arrivalDateColumn;
-    @FXML private TableColumn<Flight, LocalTime> arrivalTimeColumn;
-    @FXML private TableColumn<Flight, Number> capacityColumn;
+    @FXML
+    private TableColumn<Flight, Number> flightIdColumn;
+    @FXML
+    private TableColumn<Flight, String> fromCityColumn;
+    @FXML
+    private TableColumn<Flight, String> toCityColumn;
+    @FXML
+    private TableColumn<Flight, LocalDate> departureDateColumn;
+    @FXML
+    private TableColumn<Flight, LocalTime> departureTimeColumn;
+    @FXML
+    private TableColumn<Flight, LocalDate> arrivalDateColumn;
+    @FXML
+    private TableColumn<Flight, LocalTime> arrivalTimeColumn;
+    @FXML
+    private TableColumn<Flight, Number> capacityColumn;
 
     private ObservableList<Flight> userFlightsList = FXCollections.observableArrayList();
 
@@ -42,6 +52,31 @@ public class MyFlightsController {
         flightsTableView.setItems(userFlightsList);
         loadUserFlights();
     }
+    @FXML
+    private void deleteFlight(ActionEvent event) {
+        Flight selectedFlight = flightsTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedFlight !=null) {
+            int flightId= selectedFlight.getFlightId();
+            userFlightsList.remove(selectedFlight);
+            deleteFlightFromDatabase(flightId);
+        }
+    }
+
+    private void deleteFlightFromDatabase (int flightId ) {
+        String DELETE_QUERY = "DELETE FROM user_flights WHERE flight_id=?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_QUERY);
+            preparedStatement.setInt(1,flightId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
     private void loadUserFlights() {
         userFlightsList.clear(); // Clear the list before adding new items
 
@@ -105,5 +140,6 @@ public class MyFlightsController {
             }
         }
     }
-
 }
+
+

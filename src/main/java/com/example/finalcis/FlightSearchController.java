@@ -21,21 +21,36 @@ import java.time.format.DateTimeParseException;
 
 public class FlightSearchController {
 
-    @FXML Label overBooked;
-    @FXML Label bookFlightLabel;
-    @FXML private TextField fromCityField;
-    @FXML private TextField toCityField;
-    @FXML private DatePicker datePicker;
-    @FXML private TextField timeField;
-    @FXML private TableView<Flight> flightsTable;
-    @FXML private TableColumn<Flight, Number> flightIdColumn;
-    @FXML private TableColumn<Flight, String> fromCityColumn;
-    @FXML private TableColumn<Flight, String> toCityColumn;
-    @FXML private TableColumn<Flight, LocalDate> departureDateColumn;
-    @FXML private TableColumn<Flight, LocalTime> departureTimeColumn;
-    @FXML private TableColumn<Flight, LocalDate> arrivalDateColumn;
-    @FXML private TableColumn<Flight, LocalTime> arrivalTimeColumn;
-    @FXML private TableColumn<Flight, Number> capacityColumn;
+    @FXML
+    Label overBooked;
+    @FXML
+    Label bookFlightLabel;
+    @FXML
+    private TextField fromCityField;
+    @FXML
+    private TextField toCityField;
+    @FXML
+    private DatePicker datePicker;
+    @FXML
+    private TextField timeField;
+    @FXML
+    private TableView<Flight> flightsTable;
+    @FXML
+    private TableColumn<Flight, Number> flightIdColumn;
+    @FXML
+    private TableColumn<Flight, String> fromCityColumn;
+    @FXML
+    private TableColumn<Flight, String> toCityColumn;
+    @FXML
+    private TableColumn<Flight, LocalDate> departureDateColumn;
+    @FXML
+    private TableColumn<Flight, LocalTime> departureTimeColumn;
+    @FXML
+    private TableColumn<Flight, LocalDate> arrivalDateColumn;
+    @FXML
+    private TableColumn<Flight, LocalTime> arrivalTimeColumn;
+    @FXML
+    private TableColumn<Flight, Number> capacityColumn;
 
 
     private final ObservableList<Flight> flightsList = FXCollections.observableArrayList();
@@ -315,11 +330,33 @@ public class FlightSearchController {
             e.printStackTrace();
             return true; // Assume full on error to prevent overbooking
         } finally {
-            if (capacityResultSet != null) try { capacityResultSet.close(); } catch (SQLException e) { e.printStackTrace(); }
-            if (bookingCountResultSet != null) try { bookingCountResultSet.close(); } catch (SQLException e) { e.printStackTrace(); }
-            if (capacityStatement != null) try { capacityStatement.close(); } catch (SQLException e) { e.printStackTrace(); }
-            if (bookingCountStatement != null) try { bookingCountStatement.close(); } catch (SQLException e) { e.printStackTrace(); }
-            if (connection != null) try { connection.close(); } catch (SQLException e) { e.printStackTrace(); }
+            if (capacityResultSet != null) try {
+                capacityResultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            if (bookingCountResultSet != null) try {
+                bookingCountResultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            if (capacityStatement != null) try {
+                capacityStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            if (bookingCountStatement != null) try {
+                bookingCountStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            if (connection != null) try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
+
+
