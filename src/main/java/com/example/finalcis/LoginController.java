@@ -170,4 +170,20 @@ public class LoginController {
             // Handle the exception, possibly by showing an error message to the user
         }
     }
+
+    @FXML
+    private void deleteFlightButton (ActionEvent event) {
+        try {
+            // Load the "My Flights" view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("DeleteFlightView.fxml"));
+            VBox myFlightsView = loader.load();
+
+            // Get the current scene and set the new root
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.getScene().setRoot(myFlightsView);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception, possibly by showing an error message to the user
+        }
+    }
 }
