@@ -31,14 +31,17 @@ public class Registration {
     private Label failedMessageLabel;
     @FXML
     private Label successMessageLabel;
+    private int id = 0;
 
     @FXML
     private void Register(){
-        User user = getUser();
-        // adding the user to the database using the database access object
+        // creating a user with the getUser Method
+        User user = createUser();
+        //creating an instance of the userDAO to add the user to the database
         UserDAO userDAO = new UserDAO();
 
         try {
+            // adding the user to the database
             boolean registered = userDAO.newUser(user);
             if (registered) {
                 // Registration successful
@@ -53,7 +56,8 @@ public class Registration {
         }
     }
 
-    private User getUser() {
+    private User createUser() {
+        int id = this.id;
         String firstName = this.firstName.getText();
         String lastName = this.lastName.getText();
         String address = this.address.getText();
@@ -65,8 +69,9 @@ public class Registration {
         String ssn = this.ssn.getText();
         String securityQuestion = this.securityQuestion.getText();
 
+        this.id += 1;
+
         // Created a new user object using the data from the text-fields
-        User user = new User(firstName, lastName, address, zipcode, state, username, password, email, ssn, securityQuestion);
-        return user;
+        return new User(id, firstName, lastName, address, zipcode, state, username, password, email, ssn, securityQuestion);
     }
 }

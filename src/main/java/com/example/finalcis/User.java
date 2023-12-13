@@ -11,13 +11,13 @@ public class User {
     private String email;
     private String ssn;
     private String securityQuestion;
-    private String securityAnswer;
     private int id;
 
 
-    public User(String firstName, String lastName, String address, String zipcode,
+    public User(int id, String firstName, String lastName, String address, String zipcode,
                 String state, String username, String password, String email,
                 String ssn, String securityQuestion) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -113,16 +113,12 @@ public class User {
         this.securityQuestion = securityQuestion;
     }
 
-    public String getSecurityAnswer() {
-        return securityAnswer;
-    }
-
-    public void setSecurityAnswer(String securityAnswer) {
-        this.securityAnswer = securityAnswer;
-    }
-
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
