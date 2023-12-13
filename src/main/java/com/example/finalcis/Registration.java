@@ -1,22 +1,59 @@
 package com.example.finalcis;
 
+import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class Registration {
-    public TextField firstName;
-    public TextField lastName;
-    public TextField address;
-    public TextField zipcode;
-    public TextField state;
-    public TextField username;
-    public PasswordField password;
-    public TextField email;
-    public TextField ssn;
-    public TextField securityQuestion;
+    @FXML
+    private TextField firstName;
+    @FXML
+    private TextField lastName;
+    @FXML
+    private TextField address;
+    @FXML
+    private TextField zipcode;
+    @FXML
+    private TextField state;
+    @FXML
+    private TextField username;
+    @FXML
+    private PasswordField password;
+    @FXML
+    private TextField email;
+    @FXML
+    private TextField ssn;
+    @FXML
+    private TextField securityQuestion;
+    @FXML
+    private Label failedMessageLabel;
+    @FXML
+    private Label successMessageLabel;
 
-    public void Register(ActionEvent event){
+    @FXML
+    private void Register(){
+        User user = getUser();
+        // adding the user to the database using the database access object
+        UserDAO userDAO = new UserDAO();
+
+        try {
+            boolean registered = userDAO.newUser(user);
+            if (registered) {
+                // Registration successful
+                successMessageLabel.setText("Registration Successful!");
+            } else {
+                // Registration failed, notify the user
+                failedMessageLabel.setText("Registration failed. User not created.");
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private User getUser() {
         String firstName = this.firstName.getText();
         String lastName = this.lastName.getText();
         String address = this.address.getText();
@@ -28,9 +65,8 @@ public class Registration {
         String ssn = this.ssn.getText();
         String securityQuestion = this.securityQuestion.getText();
 
-        // Creating a new user object using the data from the text-fields
+        // Created a new user object using the data from the text-fields
         User user = new User(firstName, lastName, address, zipcode, state, username, password, email, ssn, securityQuestion);
-
+        return user;
     }
-
 }
