@@ -21,6 +21,7 @@
     <TextField fx:id="usernameField" promptText="User name" />
     <PasswordField fx:id="passwordField" promptText="Password" />
     <Label fx:id="loginMessageLabel" textFill="red" /> <!-- Label for displaying login messages -->
+    <Label fx:id="forgotPasswordMessageLabel" textFill="red" /> <!-- Label that tells user to  enter their username before clicking forgot password -->
     <Button mnemonicParsing="false" onAction="#handleLoginButtonAction" text="Login" />
     <Button mnemonicParsing="false" onAction="#handleRegistrationAction" text="Registration" />
     <Button mnemonicParsing="false" onAction="#handleForgotPasswordAction" text="Forgot Password" />

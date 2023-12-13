@@ -26,7 +26,7 @@ public class Registration {
     @FXML
     private TextField ssn;
     @FXML
-    private TextField securityQuestion;
+    private TextField securityAnswer;
     @FXML
     private Label failedMessageLabel;
     @FXML
@@ -67,11 +67,11 @@ public class Registration {
         String password = this.password.getText();
         String email = this.email.getText();
         String ssn = this.ssn.getText();
-        String securityQuestion = this.securityQuestion.getText();
+        String securityAnswer = this.securityAnswer.getText();
 
         this.id += 1;
 
         // Created a new user object using the data from the text-fields
-        return new User(id, firstName, lastName, address, zipcode, state, username, password, email, ssn, securityQuestion);
+        return new User(id, firstName, lastName, address, zipcode, state, username, password, email, ssn, securityAnswer);
     }
 }

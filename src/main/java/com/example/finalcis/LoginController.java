@@ -29,6 +29,9 @@ public class LoginController {
     private Label loginMessageLabel;
 
     @FXML
+    private Label forgotPasswordMessageLabel;
+
+    @FXML
     protected void handleLoginButtonAction(ActionEvent event) {
         try {
             Integer userId = authenticate(usernameField.getText(), passwordField.getText());
@@ -128,12 +131,25 @@ public class LoginController {
         }
     }
     public void handleForgotPasswordAction(ActionEvent event) {
-        //if (event.getSource()== )
-        try {
-            //Integer username = authenticate(usernameField.getText(),);
-        }
-        catch (Exception e){
+        String username = usernameField.getText();
+        if (!username.isEmpty()) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/ForgotPassword.fxml"));
+                Parent ForgotPasswordScreenParent = loader.load();
+                Scene ForgotPasswordScreenScene = new Scene(ForgotPasswordScreenParent);
 
+                // Get the stage from the event that was triggered by the button click and set the new scene
+                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+                window.setScene(ForgotPasswordScreenScene);
+                window.show();
+
+            }
+            catch (Exception e) {
+
+            }
+        }
+        else {
+            forgotPasswordMessageLabel.setText("Please enter your username.");
         }
     }
 

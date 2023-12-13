@@ -44,7 +44,7 @@
         <TextField fx:id="ssn" layoutX="150.0" layoutY="344.0" promptText="Enter your SSN" />
 
       <Label layoutX="50.0" layoutY="382.0" text="Security Question" />
-      <TextField fx:id="securityQuestion" layoutX="150.0" layoutY="380.0" promptText="Favorite color?" />
+      <TextField fx:id="securityAnswer" layoutX="150.0" layoutY="380.0" promptText="Favorite color?" />
 
         <Button layoutX="150.0" layoutY="426.0" mnemonicParsing="false" onAction="#Register" text="Register" />
         <Label fx:id="successMessageLabel" textFill="green" /> <!-- Label to show if registration was successful -->

@@ -10,13 +10,13 @@ public class User {
     private String password;
     private String email;
     private String ssn;
-    private String securityQuestion;
+    private String securityAnswer;
     private int id;
 
 
     public User(int id, String firstName, String lastName, String address, String zipcode,
                 String state, String username, String password, String email,
-                String ssn, String securityQuestion) {
+                String ssn, String securityAnswer) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,7 +27,7 @@ public class User {
         this.password = password; // In real-world scenarios, this should be hashed
         this.email = email;
         this.ssn = ssn;
-        this.securityQuestion = securityQuestion;
+        this.securityAnswer = securityAnswer;
     }
     public User(int id, String firstName) {
         this.id = id;
@@ -105,12 +105,12 @@ public class User {
         this.ssn = ssn;
     }
 
-    public String getSecurityQuestion() {
-        return securityQuestion;
+    public String getSecurityAnswer() {
+        return securityAnswer;
     }
 
-    public void setSecurityQuestion(String securityQuestion) {
-        this.securityQuestion = securityQuestion;
+    public void setSecurityAnswer(String securityAnswer) {
+        this.securityAnswer = securityAnswer;
     }
 
 
