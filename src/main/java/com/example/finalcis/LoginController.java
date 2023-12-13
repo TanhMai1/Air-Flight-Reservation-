@@ -30,6 +30,11 @@ public class LoginController {
 
     @FXML
     private Label forgotPasswordMessageLabel;
+    @FXML
+    private TextField answer;
+    @FXML
+    private Label usernameRetrieved;
+
 
     @FXML
     protected void handleLoginButtonAction(ActionEvent event) {
@@ -145,11 +150,48 @@ public class LoginController {
 
             }
             catch (Exception e) {
-
+                e.printStackTrace();
             }
         }
         else {
             forgotPasswordMessageLabel.setText("Please enter your username.");
+        }
+    }
+
+    public void forgotPassword() {
+        String answer = this.answer.getText();
+        String securityAnswer = null;
+        String password = null;
+
+        Connection connection;
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        String query = "SELECT security_answer, password FROM users WHERE username = ?";
+
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, usernameField.getText());
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                securityAnswer = resultSet.getString("security_answer");
+                password = resultSet.getString("password");
+                // Do something with the security answer and password
+            }
+
+            try {
+                if (securityAnswer != null && password != null && securityAnswer.equals(answer)) {
+                    usernameRetrieved.setText("Your password is " + password);
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
