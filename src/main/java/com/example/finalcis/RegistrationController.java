@@ -1,12 +1,19 @@
 package com.example.finalcis;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.EventObject;
 
 public class RegistrationController {
 
@@ -41,7 +48,7 @@ public class RegistrationController {
     private TextField securityQuestionField;
 
     @FXML
-    private void registerButtonAction() {
+    private void registerButtonAction() throws IOException {
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
         String address = addressField.getText();
@@ -55,6 +62,14 @@ public class RegistrationController {
 
         registerdUser(firstName, lastName, address, zip, state, username, password, email, ssn, securityQuestion);
         System.out.println("registration successful");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
+        Parent root = loader.load();
+
+       Stage stage = new Stage();
+       stage.setScene(new Scene(root)) ;
+       stage.show();
+
     }
 
     private void registerdUser(String firstName, String lastName, String address, String zip, String state, String username, String password, String email, String ssn, String securityQuestion) {
