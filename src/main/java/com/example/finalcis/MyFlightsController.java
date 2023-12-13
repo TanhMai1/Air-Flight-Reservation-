@@ -2,11 +2,18 @@ package com.example.finalcis;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -61,6 +68,12 @@ public class MyFlightsController {
             int flightId= selectedFlight.getFlightId();
             userFlightsList.remove(selectedFlight);
             deleteFlightFromDatabase(userId,flightId);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Flight Deleted");
+            alert.setHeaderText(null);
+            alert.setContentText("Your flight has been deleted");
+            alert.showAndWait();
         }
     }
 
@@ -140,6 +153,23 @@ public class MyFlightsController {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    @FXML
+    private void handleFlightViewBackButton(ActionEvent event) {
+        try {
+            // Load the Flight Search view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/LoginScreen.fxml"));
+            Parent flightSearchParent = loader.load();
+            Scene flightSearchScene = new Scene(flightSearchParent);
+
+            // Get the stage from the event that was triggered by the button click and set the new scene
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(flightSearchScene);
+            window.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
