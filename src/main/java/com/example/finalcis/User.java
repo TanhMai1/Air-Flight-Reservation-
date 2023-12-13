@@ -4,7 +4,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String address;
-    private String zipcode;
+    private String zip;
     private String state;
     private String username;
     private String password;
@@ -15,13 +15,13 @@ public class User {
     private int id;
 
 
-    public User(String firstName, String lastName, String address, String zipcode,
+    public User(String firstName, String lastName, String address, String zip,
                 String state, String username, String password, String email,
                 String ssn, String securityQuestion) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
-        this.zipcode = zipcode;
+        this.zip = zip;
         this.state = state;
         this.username = username;
         this.password = password; // In real-world scenarios, this should be hashed
@@ -58,11 +58,11 @@ public class User {
     }
 
     public String getZipcode() {
-        return zipcode;
+        return zip;
     }
 
-    public void setZip(String zipcode) {
-        this.zipcode = zipcode;
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 
     public String getState() {

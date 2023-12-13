@@ -57,20 +57,22 @@ public class MyFlightsController {
         Flight selectedFlight = flightsTableView.getSelectionModel().getSelectedItem();
 
         if (selectedFlight !=null) {
+            int userId = SessionManager.getInstance().getUserId();
             int flightId= selectedFlight.getFlightId();
             userFlightsList.remove(selectedFlight);
-            deleteFlightFromDatabase(flightId);
+            deleteFlightFromDatabase(userId,flightId);
         }
     }
 
-    private void deleteFlightFromDatabase (int flightId ) {
-        String DELETE_QUERY = "DELETE FROM user_flights WHERE flight_id=?";
+    private void deleteFlightFromDatabase (int userID,int flightId ) {
+        String DELETE_QUERY = "DELETE FROM user_flights WHERE user_id=? AND  flight_id=?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             connection = DBConnection.getConnection();
             preparedStatement = connection.prepareStatement(DELETE_QUERY);
-            preparedStatement.setInt(1,flightId);
+            preparedStatement.setInt(1,userID);
+            preparedStatement.setInt(2,flightId);
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
