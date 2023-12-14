@@ -69,7 +69,6 @@ public class Registration {
         String ssn = this.ssn.getText();
         String securityAnswer = this.securityAnswer.getText();
 
-        this.id += 1;
 
         // Created a new user object using the data from the text-fields
         return new User(id, firstName, lastName, address, zipcode, state, username, password, email, ssn, securityAnswer);

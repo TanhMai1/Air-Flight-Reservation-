@@ -34,6 +34,8 @@ public class LoginController {
     private TextField answer;
     @FXML
     private Label usernameRetrieved;
+    @FXML
+    private Label wrongAnswer;
 
 
     @FXML
@@ -160,6 +162,7 @@ public class LoginController {
 
     public void forgotPassword() {
         String answer = this.answer.getText();
+        String username = usernameField.getText();
         String securityAnswer = null;
         String password = null;
 
@@ -171,23 +174,24 @@ public class LoginController {
         try {
             connection = DBConnection.getConnection();
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, usernameField.getText());
+            preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 securityAnswer = resultSet.getString("security_answer");
                 password = resultSet.getString("password");
-                // Do something with the security answer and password
+            }
+            System.out.println("Username: " + username);
+            System.out.println("Security Answer from DB: " + securityAnswer);
+            System.out.println("Password from DB: " + password);
+
+            if (securityAnswer != null && password != null && securityAnswer.equals(answer)) {
+                usernameRetrieved.setText("Your password is " + password);
+            }
+            else {
+                wrongAnswer.setText("The answer you entered is wrong, try again");
             }
 
-            try {
-                if (securityAnswer != null && password != null && securityAnswer.equals(answer)) {
-                    usernameRetrieved.setText("Your password is " + password);
-                }
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
 
         }
         catch (Exception e) {
