@@ -29,49 +29,30 @@ public class Flight {
         this.capacity.set(capacity);
     }
 
-    public static Flight fromResultSet(ResultSet resultSet) throws SQLException {
-        int flightId = resultSet.getInt("flight_id");
-        String fromCity = resultSet.getString("from_city");
-        String toCity = resultSet.getString("to_city");
-        LocalDate departureDate = resultSet.getDate("departure_date").toLocalDate();
-        LocalTime departureTime = resultSet.getTime("departure_time").toLocalTime();
-        LocalDate arrivalDate = resultSet.getDate("arrival_date").toLocalDate();
-        LocalTime arrivalTime = resultSet.getTime("arrival_time").toLocalTime();
-        int capacity = resultSet.getInt("capacity");
-
-        return new Flight(flightId, fromCity, toCity, departureDate, departureTime, arrivalDate, arrivalTime, capacity);
-    }
 
     // Getters and setters for JavaFX properties
     public int getFlightId() { return flightId.get(); }
     public IntegerProperty flightIdProperty() { return flightId; }
-    public void setFlightId(int flightId) { this.flightId.set(flightId); }
 
-    public String getFromCity() { return fromCity.get(); }
+
     public StringProperty fromCityProperty() { return fromCity; }
-    public void setFromCity(String fromCity) { this.fromCity.set(fromCity); }
 
-    public String getToCity() { return toCity.get(); }
+
     public StringProperty toCityProperty() { return toCity; }
     public void setToCity(String toCity) { this.toCity.set(toCity); }
 
-    public LocalDate getDepartureDate() { return departureDate.get(); }
     public ObjectProperty<LocalDate> departureDateProperty() { return departureDate; }
-    public void setDepartureDate(LocalDate departureDate) { this.departureDate.set(departureDate); }
 
-    public LocalTime getDepartureTime() { return departureTime.get(); }
+
     public ObjectProperty<LocalTime> departureTimeProperty() { return departureTime; }
-    public void setDepartureTime(LocalTime departureTime) { this.departureTime.set(departureTime); }
 
-    public LocalDate getArrivalDate() { return arrivalDate.get(); }
+
     public ObjectProperty<LocalDate> arrivalDateProperty() { return arrivalDate; }
-    public void setArrivalDate(LocalDate arrivalDate) { this.arrivalDate.set(arrivalDate); }
 
-    public LocalTime getArrivalTime() { return arrivalTime.get(); }
+
     public ObjectProperty<LocalTime> arrivalTimeProperty() { return arrivalTime; }
-    public void setArrivalTime(LocalTime arrivalTime) { this.arrivalTime.set(arrivalTime); }
 
-    public int getCapacity() { return capacity.get(); }
+
     public IntegerProperty capacityProperty() { return capacity; }
-    public void setCapacity(int capacity) { this.capacity.set(capacity); }
+
 }
