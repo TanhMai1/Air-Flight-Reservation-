@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -19,4 +20,9 @@
         </columns>
     </TableView>
    <Button mnemonicParsing="false" onAction="#deleteFlight" text="Delete Flight" />
+   <Button mnemonicParsing="false" onAction="#handleFlightViewBackButton" text="Back">
+      <VBox.margin>
+         <Insets left="355.0" top="-25.0" />
+      </VBox.margin>
+   </Button>
 </VBox>

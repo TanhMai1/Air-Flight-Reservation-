@@ -360,6 +360,7 @@ public class FlightSearchController {
         }
     }
 
+    @FXML
     private void handleFlightSearchBackButton(ActionEvent event) {
         try {
             // Load the Flight Search view

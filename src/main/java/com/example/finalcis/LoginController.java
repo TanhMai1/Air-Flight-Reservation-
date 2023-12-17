@@ -197,7 +197,7 @@ public class LoginController {
         }
     }
 
-    public void handleBackButton(ActionEvent event) {
+    public void handleLogoutButton(ActionEvent event) {
         try {
             // Load the Flight Search view
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/MainScreen.fxml"));
