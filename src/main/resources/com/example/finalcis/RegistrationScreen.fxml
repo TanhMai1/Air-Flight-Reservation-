@@ -46,8 +46,9 @@
       <Label layoutX="50.0" layoutY="382.0" text="Security Question" />
       <TextField fx:id="securityAnswer" layoutX="150.0" layoutY="380.0" promptText="Favorite color?" />
 
-        <Button layoutX="150.0" layoutY="426.0" mnemonicParsing="false" onAction="#Register" text="Register" />
+        <Button layoutX="30.0" layoutY="426.0" mnemonicParsing="false" onAction="#Register" text="Register" />
         <Label fx:id="successMessageLabel" textFill="green" /> <!-- Label to show if registration was successful -->
-        <Label fx:id="failedMessageLabel" textFill="red" /> <!-- Label to show if registration failed -->
+        <Label fx:id="failedMessageLabel" textFill="red" />
+      <Button fx:id="closeButton" layoutX="273.0" layoutY="426.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" text="Back" /> <!-- Label to show if registration failed -->
     </children>
 </AnchorPane>

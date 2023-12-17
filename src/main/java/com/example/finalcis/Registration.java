@@ -1,10 +1,18 @@
 package com.example.finalcis;
-
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class Registration {
     @FXML
@@ -34,7 +42,7 @@ public class Registration {
     private int id = 0;
 
     @FXML
-    private void Register(){
+    private void Register() {
         // creating a user with the getUser Method
         User user = createUser();
         //creating an instance of the userDAO to add the user to the database
@@ -50,10 +58,10 @@ public class Registration {
                 // Registration failed, notify the user
                 failedMessageLabel.setText("Registration failed. User not created.");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     private User createUser() {
@@ -72,5 +80,22 @@ public class Registration {
 
         // Created a new user object using the data from the text-fields
         return new User(id, firstName, lastName, address, zipcode, state, username, password, email, ssn, securityAnswer);
+    }
+
+    @FXML
+    public Button closeButton;
+
+    @FXML
+    public void handleCloseButtonAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
+        Parent root = loader.load();
+
+        Stage LoginStage = new Stage();
+        LoginStage.setScene(new Scene(root));
+        LoginStage.show();
+
+
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
     }
 }
