@@ -36,6 +36,8 @@ public class LoginController {
     private Label usernameRetrieved;
     @FXML
     private Label wrongAnswer;
+    String securityAnswer = null;
+    String password = null;
 
 
     @FXML
@@ -136,64 +138,52 @@ public class LoginController {
         }
     }
     public void handleForgotPasswordAction(ActionEvent event) {
-        String username = usernameField.getText();
-        if (!username.isEmpty()) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/ForgotPassword.fxml"));
-                Parent ForgotPasswordScreenParent = loader.load();
-                Scene ForgotPasswordScreenScene = new Scene(ForgotPasswordScreenParent);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/finalcis/ForgotPassword.fxml"));
+            Parent ForgotPasswordScreenParent = loader.load();
+            Scene ForgotPasswordScreenScene = new Scene(ForgotPasswordScreenParent);
 
-                // Get the stage from the event that was triggered by the button click and set the new scene
-                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-                window.setScene(ForgotPasswordScreenScene);
-                window.show();
+            // Get the stage from the event that was triggered by the button click and set the new scene
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(ForgotPasswordScreenScene);
+            window.show();
 
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
         }
-        else {
-            forgotPasswordMessageLabel.setText("Please enter your username.");
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void forgotPassword() {
-        String answer = this.answer.getText();
+        String answer = this.answer.getText(); // variable for the answer that the user gives when they click forgot password
         String username = usernameField.getText();
-        String securityAnswer = null;
-        String password = null;
 
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultSet;
         String query = "SELECT security_answer, password FROM users WHERE username = ?";
+        if (!username.isEmpty()) {
+            try {
+                connection = DBConnection.getConnection();
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, username);
+                resultSet = preparedStatement.executeQuery();
 
-        try {
-            connection = DBConnection.getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, username);
-            resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    securityAnswer = resultSet.getString("security_answer");
+                    password = resultSet.getString("password");
+                }
 
-            while (resultSet.next()) {
-                securityAnswer = resultSet.getString("security_answer");
-                password = resultSet.getString("password");
+                if (securityAnswer != null && password != null && securityAnswer.equals(answer)) {
+                    usernameRetrieved.setText("Your password is " + password);
+                }
+                else {
+                    wrongAnswer.setText("The answer you entered is wrong, try again");
+                }
             }
-            System.out.println("Username: " + username);
-            System.out.println("Security Answer from DB: " + securityAnswer);
-            System.out.println("Password from DB: " + password);
-
-            if (securityAnswer != null && password != null && securityAnswer.equals(answer)) {
-                usernameRetrieved.setText("Your password is " + password);
+            catch (Exception e) {
+                e.printStackTrace();
             }
-            else {
-                wrongAnswer.setText("The answer you entered is wrong, try again");
-            }
-
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
