@@ -94,16 +94,9 @@ public class LoginController {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
+
 
     @FXML
     protected void handleBookFlightButton(ActionEvent event) {

@@ -18,8 +18,5 @@ public class SessionManager {
         this.userId = userId;
     }
 
-    public void clear() {
-        userId = null;
-    }
 }
 
