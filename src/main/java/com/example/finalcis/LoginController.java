@@ -18,7 +18,6 @@ import java.sql.*;
 import java.util.Objects;
 
 public class LoginController {
-
     @FXML
     private TextField usernameField;
 
@@ -36,6 +35,8 @@ public class LoginController {
     private Label usernameRetrieved;
     @FXML
     private Label wrongAnswer;
+    @FXML
+    private Label enterUsername;
     String securityAnswer = null;
     String password = null;
 
@@ -184,6 +185,9 @@ public class LoginController {
             catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        else {
+            enterUsername.setText("Please enter your username");
         }
     }
 
