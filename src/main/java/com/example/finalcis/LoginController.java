@@ -36,6 +36,8 @@ public class LoginController {
     @FXML
     private Label wrongAnswer;
     @FXML
+    private Label noUser;
+    @FXML
     private Label enterUsername;
     String securityAnswer = null;
     String password = null;
@@ -151,36 +153,46 @@ public class LoginController {
     public void forgotPassword() {
         String answer = this.answer.getText(); // variable for the answer that the user gives when they click forgot password
         String username = usernameField.getText();
-
+        // Initialize variables for database connection and query execution
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultSet;
+        // SQL query to retrieve security answer and password for a given username
         String query = "SELECT security_answer, password FROM users WHERE username = ?";
+        // IF statement that executes a block of code if the user has entered their username
         if (!username.isEmpty()) {
             try {
                 connection = DBConnection.getConnection();
                 preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, username);
                 resultSet = preparedStatement.executeQuery();
-
-                while (resultSet.next()) {
+                // if the query returns a result the If statement should execute meaning it found the user in the database
+                if (resultSet.next()) {
                     securityAnswer = resultSet.getString("security_answer");
                     password = resultSet.getString("password");
-                }
-
-                if (securityAnswer != null && password != null && securityAnswer.equals(answer)) {
-                    usernameRetrieved.setText("Your password is " + password);
+                    if (securityAnswer != null && password != null && securityAnswer.equals(answer)) {
+                        usernameRetrieved.setText("Your password is " + password);
+                    }
+                    else {
+                        wrongAnswer.setText("The answer you entered is wrong, try again");
+                    }
                 }
                 else {
-                    wrongAnswer.setText("The answer you entered is wrong, try again");
+                    noUser.setText("User does not exist");
                 }
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        // Else displays an error message if the username is empty
         else {
-            enterUsername.setText("Please enter your username");
+            try {
+                enterUsername.setText("Please enter your username");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
