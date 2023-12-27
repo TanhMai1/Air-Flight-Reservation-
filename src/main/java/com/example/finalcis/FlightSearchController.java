@@ -1,15 +1,14 @@
 package com.example.finalcis;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -56,6 +55,21 @@ public class FlightSearchController {
 
 
     private final ObservableList<Flight> flightsList = FXCollections.observableArrayList();
+
+    public void initialize() {
+        // Bind the TableView to the ObservableList.
+        flightsTable.setItems(flightsList);
+
+        // Initialize cell value factories for the TableView columns
+        flightIdColumn.setCellValueFactory(cellData -> cellData.getValue().flightIdProperty());
+        fromCityColumn.setCellValueFactory(cellData -> cellData.getValue().fromCityProperty());
+        toCityColumn.setCellValueFactory(cellData -> cellData.getValue().toCityProperty());
+        departureDateColumn.setCellValueFactory(cellData -> cellData.getValue().departureDateProperty());
+        departureTimeColumn.setCellValueFactory(cellData -> cellData.getValue().departureTimeProperty());
+        arrivalDateColumn.setCellValueFactory(cellData -> cellData.getValue().arrivalDateProperty());
+        arrivalTimeColumn.setCellValueFactory(cellData -> cellData.getValue().arrivalTimeProperty());
+        capacityColumn.setCellValueFactory(cellData -> cellData.getValue().capacityProperty());
+    }
 
     @FXML
     private void searchFlights() {
@@ -362,5 +376,3 @@ public class FlightSearchController {
         }
     }
 }
-
-

@@ -2,8 +2,6 @@ package com.example.finalcis;
 
 import javafx.beans.property.*;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
