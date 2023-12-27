@@ -233,4 +233,19 @@ public class LoginController {
             // Handle the exception, possibly by showing an error message to the user
         }
     }
+    @FXML
+    public Button closeButton;
+    @FXML
+    public void handleCloseButtonAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
+        Parent root = loader.load();
+
+        Stage LoginStage = new Stage();
+        LoginStage.setScene(new Scene(root));
+        LoginStage.show();
+
+
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
 }
