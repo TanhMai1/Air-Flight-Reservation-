@@ -39,11 +39,11 @@ public class Registration {
     private Label failedMessageLabel;
     @FXML
     private Label successMessageLabel;
-    private int id = 0;
+    private int id;
 
     @FXML
     private void Register() {
-        // creating a user with the getUser Method
+        // creating a user with the createUser Method
         User user = createUser();
         //creating an instance of the userDAO to add the user to the database
         UserDAO userDAO = new UserDAO();
